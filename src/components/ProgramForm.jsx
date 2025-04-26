@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import { createProgram } from './api.js';
+import { createProgram } from '../api.js';
 
 function ProgramForm() {
   const [formData, setFormData] = useState({
@@ -25,7 +25,15 @@ function ProgramForm() {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+    <Box component="form" onSubmit={handleSubmit} sx={{ 
+        mt: 3, 
+        maxWidth: '800px',
+        mx: 'auto',         
+        p: 3,               
+        bgcolor: 'background.paper', 
+        borderRadius: 2,    
+        boxShadow: 1
+    }}>
       <Typography variant="h6" gutterBottom>
         Create New Health Program
       </Typography>

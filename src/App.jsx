@@ -1,12 +1,34 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ClientsPage from './pages/ClientsPage';
 import ProgramsPage from './pages/ProgramsPage';
-import './App.css';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#a86523', 
+    },
+    secondary: {
+      main: '#e9a319',  
+    },
+    background: {
+      default: '#fff', 
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h4: {
+      fontWeight: 600,
+      color: '#4a148c',
+    },
+  },
+});
 
 function App() {
   return (
+    <ThemeProvider theme={theme}>
     <Router>
       <div className="App">
         <Navbar />
@@ -19,6 +41,7 @@ function App() {
         </div>
       </div>
     </Router>
+    </ThemeProvider>
   );
 }
 

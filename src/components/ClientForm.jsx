@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import { createClient } from './api.js';
+import { createClient } from '../api.js';
 
 function ClientForm() {
   const [formData, setFormData] = useState({
@@ -26,7 +26,14 @@ function ClientForm() {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+    <Box component="form" onSubmit={handleSubmit} sx={{ 
+        mt: 3,
+        maxWidth: '800px',
+        mx: 'auto',
+        p: 3,
+        bgcolor: 'background.paper',
+        borderRadius: 2,
+        boxShadow: 1 }}>
       <Typography variant="h6" gutterBottom>
         Register New Client
       </Typography>
