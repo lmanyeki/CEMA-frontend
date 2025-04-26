@@ -21,6 +21,9 @@ function Navbar() {
           <Button color="inherit" component={Link} to="/programs" sx={{ fontWeight: 600 }}>
             Programs
           </Button>
+          <Button color="inherit" component={Link} to="/reports" sx={{ fontWeight: 600 }}>
+            Reports
+          </Button>
         </Toolbar>
       </AppBar>
     );

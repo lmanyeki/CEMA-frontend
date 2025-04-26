@@ -1,28 +1,46 @@
 import { useState, useEffect } from 'react';
-import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
-import { getAllPrograms } from '../api.js';
+import { Box, Typography, List, ListItem, ListItemText, CircularProgress } from '@mui/material';
+import { getAllPrograms } from '../api';
 
 function ProgramList() {
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [error, setError] = useState(null);
+  
   useEffect(() => {
     const fetchPrograms = async () => {
       try {
         const response = await getAllPrograms();
+        if (Array.isArray(response?.data)) {
         setPrograms(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching programs:', error);
-        setLoading(false);
+      } else {
+        throw new Error('Invalid programs data format');
       }
-    };
+    } catch (err) {
+      setError(err.message);
+      console.error('Error fetching programs:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
     fetchPrograms();
   }, []);
 
-  if (loading) return <Typography>Loading programs...</Typography>;
-
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" mt={4}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+  if (error) {
+    return (
+      <Typography color="error" variant="body1">
+        Error loading programs: {error}
+      </Typography>
+    );
+  }
   return (
     <Box sx={{ mt: 4 }}>
       <Typography variant="h5" gutterBottom>

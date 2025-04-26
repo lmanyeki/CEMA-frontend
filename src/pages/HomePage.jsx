@@ -105,7 +105,7 @@ function HomePage() {
             </Typography>
             <Button
               component={Link}
-              to="/programs"
+              to="/reports"
               startIcon={<ReportsIcon />}
               size="small"
               sx={{ mt: 1 }}

@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ClientsPage from './pages/ClientsPage';
 import ProgramsPage from './pages/ProgramsPage';
+import ReportsPage from './pages/ReportsPage';
 
 const theme = createTheme({
   palette: {
@@ -37,6 +38,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/clients" element={<ClientsPage />} />
             <Route path="/programs" element={<ProgramsPage />} />
+            <Route path="/reports" element={<ReportsPage />} />
           </Routes>
         </div>
       </div>

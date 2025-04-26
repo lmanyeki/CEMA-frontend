@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Box, Typography, Button, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
-import { getAllPrograms, enrollClient } from '../api.js';
+import { getAllPrograms, enrollClient } from '../api';
 
 function EnrollmentForm({ clientId }) {
   const [programs, setPrograms] = useState([]);

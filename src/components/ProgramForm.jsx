@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
-import { createProgram } from '../api.js';
+import { TextField, Button, Box, Typography, Alert } from '@mui/material';
+import { createProgram } from '../api';
 
 function ProgramForm() {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
   });
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,11 +18,10 @@ function ProgramForm() {
     e.preventDefault();
     try {
       await createProgram(formData);
-      alert('Program created successfully!');
+      setSuccess(true);
       setFormData({ name: '', description: '' });
-    } catch (error) {
-      console.error('Error creating program:', error);
-      alert('Failed to create program');
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
     }
   };
 
@@ -34,6 +35,8 @@ function ProgramForm() {
         borderRadius: 2,    
         boxShadow: 1
     }}>
+      {error && <Alert severity="error">{error}</Alert>}
+      {success && <Alert severity="success">Program created!</Alert>}
       <Typography variant="h6" gutterBottom>
         Create New Health Program
       </Typography>

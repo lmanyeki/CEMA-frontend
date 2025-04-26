@@ -1,28 +1,25 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, List, ListItem, ListItemText, Chip, Divider } from '@mui/material';
-import { getClientProfile } from '../api.js';
+import { getClientProfile } from '../api';
 
 function ClientProfile() {
   const { id } = useParams();
   const [client, setClient] = useState(null);
-  const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchClientProfile = async () => {
+    const fetchData = async () => {
       try {
         const response = await getClientProfile(id);
-        setClient(response.data.client);
-        setPrograms(response.data.programs);
-        setLoading(false);
+        setClient(response.data);
       } catch (error) {
-        console.error('Error fetching client profile:', error);
+        console.error(error);
+      } finally {
         setLoading(false);
       }
     };
-
-    fetchClientProfile();
+    fetchData();
   }, [id]);
 
   if (loading) return <Typography>Loading...</Typography>;
@@ -31,35 +28,30 @@ function ClientProfile() {
   return (
     <Box sx={{ mt: 3 }}>
       <Typography variant="h4" gutterBottom>
-        {client.name}
+        {client.name} <Chip label={client.clientId} color="primary" />
       </Typography>
-      <Typography variant="subtitle1" gutterBottom>
-        Email: {client.email}
-      </Typography>
-      <Typography variant="subtitle1" gutterBottom>
-        Phone: {client.phone || 'N/A'}
-      </Typography>
+      <Typography variant="subtitle1">Email: {client.email}</Typography>
+      <Typography variant="subtitle1">Phone: {client.phone || 'N/A'}</Typography>
+      <Typography variant="subtitle1">Age: {client.age || 'N/A'}</Typography>
+      <Typography variant="subtitle1">Gender: {client.gender || 'N/A'}</Typography>
+      <Typography variant="subtitle1">Address: {client.address || 'N/A'}</Typography>
       
       <Divider sx={{ my: 3 }} />
       
-      <Typography variant="h5" gutterBottom>
-        Enrolled Programs
-      </Typography>
-      
-      {programs.length > 0 ? (
+      <Typography variant="h6" sx={{ mt: 3 }}>Enrolled Programs</Typography>
+      {client.enrollments.length > 0 ? (
         <List>
-          {programs.map((program) => (
-            <ListItem key={program.id}>
+          {client.enrollments.map(enrollment => (
+            <ListItem key={enrollment.id}>
               <ListItemText
-                primary={program.name}
-                secondary={program.description}
+                primary={enrollment.program.name}
+                secondary={`Status: ${enrollment.status} • Enrolled: ${new Date(enrollment.enrolledAt).toLocaleDateString()}`}
               />
-              <Chip label="Enrolled" color="success" />
             </ListItem>
           ))}
         </List>
       ) : (
-        <Typography>This client is not enrolled in any programs yet.</Typography>
+        <Typography>No program enrollments</Typography>
       )}
     </Box>
   );

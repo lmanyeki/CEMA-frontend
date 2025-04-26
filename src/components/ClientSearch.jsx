@@ -10,7 +10,7 @@ import {
   Link 
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { searchClients } from '../api.js';
+import { searchClients } from '../api';
 
 function ClientSearch() {
   const [searchQuery, setSearchQuery] = useState('');
